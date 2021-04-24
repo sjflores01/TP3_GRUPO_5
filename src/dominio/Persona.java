@@ -9,17 +9,17 @@ public class Persona {
 
 	// Constructors
 	public Persona(String dni, String nombre, String apellido) {
-		try
-		{
-			verificarDni(dni);
+		//try
+		//{
+			//verificarDni(dni);
 			this.setDni(dni);
 			this.setNombre(nombre);
 			this.setApellido(apellido);
-		}
-		catch(DniInvalidoException ex)
-		{
-			ex.printStackTrace();
-		}
+		//}
+		//catch(DniInvalidoException ex)
+		//{
+			//ex.printStackTrace();
+		//}
 			
 	}
 
