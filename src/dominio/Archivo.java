@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+
 import dominio.Persona;
+import java.util.Collections;
 
 public class Archivo {
 
@@ -45,7 +48,10 @@ public class Archivo {
 					
 					Persona _persona = new Persona(dni, nombre, apellido);
 	
-					// to do: antes de agregar hacer la validacion del dni 
+					// pedro:
+					// en el if deberiamos agregar la funcion de verificarDni
+					// pero lo dejamos para la entrega asi vemos que funque todo
+					
 					if( ! this.EsDuplicado(listaDePersonas, _persona)) {
 						listaDePersonas.add(_persona);	
 					}
@@ -53,11 +59,10 @@ public class Archivo {
 				}
 				
 			
-				System.out.println(lineaDePersona);
-				
+			//	System.out.println(lineaDePersona);
+				// pedro: lo comente para no llenar la consola
 			}
 		
-			//to do: antes de retornar la lista ordenar alfabeticamente
 			
 			bufferDeLector.close();
 			
@@ -67,8 +72,38 @@ public class Archivo {
 		}
 		
 		
-		System.out.println(listaDePersonas);
+		listaDePersonas = OrdenarAlfabeticamente(listaDePersonas);
+		
+		
+		for (Persona persona : listaDePersonas) {
+			
+			System.out.println(persona.toString());
+		}
+		
+		
 		return listaDePersonas;
+	}
+	
+	
+	//ordenamos por apellido de a-z
+	public ArrayList<Persona> OrdenarAlfabeticamente (ArrayList<Persona> lista){
+		
+		Persona aux; 
+		int i, j;
+		
+        for (i = 0; i < lista.size() - 1; i++) {
+            for (j = 0; j < lista.size() - i - 1; j++) {
+            	
+                if (lista.get(j + 1).getApellido().charAt(0) < lista.get(j).getApellido().charAt(0)) {
+                	
+                    aux = lista.get(j + 1);
+                    lista.set(j + 1, lista.get(j));
+                    lista.set(j, aux);
+                }
+            }
+        }
+		
+		return lista;
 	}
 	
 	
@@ -81,9 +116,9 @@ public class Archivo {
 		while(personaIterator.hasNext()) {
 			 Persona _persona = (Persona) personaIterator.next();
 			 
-			 if(_persona.getNombre() == _personaABuscar.getNombre() && 
-				_persona.getApellido() == _personaABuscar.getApellido() &&
-				_persona.getDni() == _personaABuscar.getDni() ) {
+			 if(_persona.getNombre().compareTo(_personaABuscar.getNombre()) == 0 && 
+				_persona.getApellido().compareTo(_personaABuscar.getApellido()) == 0 &&
+				_persona.getDni().compareTo(_personaABuscar.getDni()) == 0 ) {
 			
 				 esDuplicado = true;
 				 

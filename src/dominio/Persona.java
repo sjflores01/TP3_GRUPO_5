@@ -60,7 +60,7 @@ public class Persona {
 
 	@Override
 	public String toString() {
-		return "Persona [Dni=" + this.getDni() + ", Nombre=" + this.getNombre() + ", Apellido=" + this.getApellido() + "]";
+		return "Persona [Dni = " + this.getDni() + ", Nombre = " + this.getNombre() + ", Apellido = " + this.getApellido() + "]";
 	}
 
 }
