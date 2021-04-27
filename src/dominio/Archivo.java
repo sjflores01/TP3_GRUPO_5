@@ -1,12 +1,16 @@
 package dominio;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import dominio.Persona;
 import java.util.Collections;
@@ -14,6 +18,7 @@ import java.util.Collections;
 public class Archivo {
 
 	private String ruta;
+	private ArrayList<Persona> listaDePersonas = new ArrayList<Persona>();
 	
 	public Archivo(String ruta){
 		this.ruta = ruta;
@@ -28,7 +33,7 @@ public class Archivo {
 
 	public ArrayList<Persona> getListaDePersonasFromArchivo(){
 		FileReader lectorDeArchivo;
-		ArrayList<Persona> listaDePersonas = new ArrayList<Persona>();
+		
 		
 		try {
 			lectorDeArchivo = new FileReader(this.ruta);
@@ -132,6 +137,14 @@ public class Archivo {
 	}
 
 	
+	public ArrayList<Persona> getListaDePersonas() {
+		return listaDePersonas;
+	}
+
+	public void setListaDePersonas(ArrayList<Persona> listaDePersonas) {
+		this.listaDePersonas = listaDePersonas;
+	}
+
 	public String getRuta() {
 		return ruta;
 	}
@@ -140,6 +153,89 @@ public class Archivo {
 		this.ruta = ruta;
 	}
 	
+	//AGREGO FUNCINO PARA CREAR ARCHIVO
+	public boolean creaArchivo()
+	{
+		
+		FileWriter escritura;
+		try {
+			escritura = new FileWriter(this.ruta, true);
+			escritura.write("");
+			escritura.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+			
+	}
+	
+	public Boolean GrabarNuevoArchivo(String rutaArchivo,ArrayList<Persona> lista)
+	{
+		
+		
+		try 
+		{
+			if(existe())
+			{
+			for (Persona persona : lista) {
+				
+				FileWriter entrada = new FileWriter(rutaArchivo, true);
+				BufferedWriter miBuffer = new BufferedWriter(entrada);
+				miBuffer.write(persona.toString());
+				miBuffer.close();
+				entrada.close();
+				
+			}
+			
+			
+			}
+			else
+			{
+				creaArchivo();
+				
+				for (Persona persona : lista) {
+					
+					FileWriter entrada = new FileWriter(rutaArchivo, true);
+					BufferedWriter miBuffer = new BufferedWriter(entrada);
+					miBuffer.write(persona.toString());
+					miBuffer.close();
+					entrada.close();
+					
+				}
+				
+				
+			}
+			return true;
+			
+		} 
+		catch (Exception e) 
+		{
+			
+			e.printStackTrace();
+			return false;
+		}
+		
+		
+	}
+	public void leer_archivo(String rutaArchivo) {
+		FileReader entrada;
+		try {
+			entrada = new FileReader(rutaArchivo);
+			BufferedReader miBuffer = new BufferedReader(entrada);
+			
+		   String linea = "";
+			while (linea != null) {
+				System.out.println("\n"+linea);
+				linea = miBuffer.readLine();
+			}
+			miBuffer.close();
+			entrada.close();
+
+		} catch (IOException e) {
+			System.out.println("No se encontro el archivo");
+		}
+	}
 	
 	
 }
